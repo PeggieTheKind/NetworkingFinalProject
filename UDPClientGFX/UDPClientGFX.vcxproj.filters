@@ -84,6 +84,9 @@
     <ClCompile Include="gameplay\playermovementsystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RyansFinalProtocol.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\engine.h">
@@ -162,6 +165,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameplay\playermovementsystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RyansFinalProtocol.pb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

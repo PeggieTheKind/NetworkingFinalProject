@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)dev/include;$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dev/lib/$(Platform)/$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,13 +108,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)extern/glew/include;$(SolutionDir)extern/freeglut/include;$(SolutionDir)extern/glm/include;$(SolutionDir)extern/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)extern/google/include;$(SolutionDir)extern/glew/include;$(SolutionDir)extern/freeglut/include;$(SolutionDir)extern/glm/include;$(SolutionDir)extern/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)extern/glew/lib/$(Configuration);$(SolutionDir)extern/freeglut/lib/$(Configuration);$(SolutionDir)extern/assimp/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglutd.lib;glew32d.lib;assimp-vc130-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libprotobufd.lib;freeglutd.lib;glew32d.lib;assimp-vc130-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)extern\glew\bin\$(Configuration)\glew32d.dll" "$(OutDir)glew32d.dll"
@@ -161,6 +165,7 @@ copy /Y "$(SolutionDir)extern\assimp\bin\$(Configuration)\assimp-vc130-mt.dll" "
     <ClCompile Include="network\netcomponent.cpp" />
     <ClCompile Include="network\networkmanager.cpp" />
     <ClCompile Include="physics\physics.cpp" />
+    <ClCompile Include="RyansFinalProtocol.pb.cc" />
     <ClCompile Include="system\component.cpp" />
     <ClCompile Include="system\entity.cpp" />
     <ClCompile Include="system\entitymanager.cpp" />
@@ -188,6 +193,7 @@ copy /Y "$(SolutionDir)extern\assimp\bin\$(Configuration)\assimp-vc130-mt.dll" "
     <ClInclude Include="network\netcomponent.h" />
     <ClInclude Include="network\networkmanager.h" />
     <ClInclude Include="physics\physics.h" />
+    <ClInclude Include="RyansFinalProtocol.pb.h" />
     <ClInclude Include="system\component.h" />
     <ClInclude Include="system\entity.h" />
     <ClInclude Include="system\entitymanager.h" />

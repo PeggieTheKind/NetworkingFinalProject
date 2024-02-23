@@ -106,12 +106,13 @@ namespace net
 		// Process everything
 	}
 
-	void NetworkManager::SendPlayerPositionToServer(float x, float z, float l, float r)
+	void NetworkManager::SendPlayerPositionToServer(float x, float z, float l, float r, bool shot)
 	{
 		m_PlayerPosition.x = x;
 		m_PlayerPosition.z = z;
 		m_PlayerPosition.l = l;
 		m_PlayerPosition.r = r;
+		m_PlayerPosition.shot = shot;
 	}
 
 	void NetworkManager::HandleRECV()

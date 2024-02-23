@@ -15,7 +15,10 @@ public:
 			delete pair.second;
 		}
 	}
-
+	bool hasShot = false;
+	bool isBullet = false;
+	bool inMotion = false;
+	Entity* parentOf;
 	template<typename T>
 	bool HasComponent() const
 	{

@@ -1,0 +1,49 @@
+syntax = "proto2";
+
+package tutorial;
+
+message CreateAccountWeb
+{
+    required long requiredId;
+    required string email;
+    required plainTextPassword;
+}
+
+message CreateAccountWebSuccess {
+    required long requestId;
+    required long userId;
+}
+
+message CreateAccountWebFailure {
+    required long requestId;
+        enum reason 
+        {
+        ACCOUNT_ALREADY_EXISTS;
+        INVALID_PASSWORD;
+        INTERNAL_SERVER_ERROR;
+        }
+}
+
+message AuthenticateWeb 
+{
+    required long requestId;
+    required string email;
+    required string plaintextPassword;
+}
+
+message AuthenticateWebSuccess {
+    required long requestId;
+    required long userId;
+    required string creationDate;
+}
+
+message AuthenticateWebFailure {
+requiredlong requestId;
+    enum reason 
+    {
+    INVALID_CREDENTIALS;
+    INTERNAL_SERVER_ERROR;
+    }
+}
+
+

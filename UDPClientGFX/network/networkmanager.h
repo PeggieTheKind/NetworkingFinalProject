@@ -29,6 +29,7 @@ namespace net
 		float z;
 		float l;
 		float r;
+		bool shot;
 	};
 
 	struct ClientInfo
@@ -48,7 +49,7 @@ namespace net
 
 		void Update();
 
-		void SendPlayerPositionToServer(float x, float z, float l, float r);
+		void SendPlayerPositionToServer(float x, float z, float l, float r, bool shot);
 
 		// 
 		// Positions of players

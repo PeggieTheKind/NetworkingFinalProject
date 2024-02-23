@@ -37,7 +37,6 @@ void PlayerMovementSystem::Execute(const std::vector<Entity*>& entities, float d
 			if (transform->orientation.y < -.6)
 				transform->orientation.y = -.6;
 
-			std::cout << transform->orientation.y << std::endl;
 		}
 	}
 }

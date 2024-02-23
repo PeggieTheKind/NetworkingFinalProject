@@ -121,7 +121,7 @@ namespace net
 		sockaddr_in addr;
 		int addrLen = sizeof(addr);
 
-		const int bufLen = 16;	// recving 4 floats only
+		const int bufLen = 20;	// recving 4 floats only + 1 bool
 		char buffer[bufLen];
 		int result = recvfrom(m_ListenSocket, buffer, bufLen, 0, (SOCKADDR*)&addr, &addrLen);
 		if (result == SOCKET_ERROR) {
@@ -174,6 +174,8 @@ namespace net
 		memcpy(&client.z, (const void*)&(buffer[4]), sizeof(float));
 		memcpy(&client.l, (const void*)&(buffer[8]), sizeof(float));
 		memcpy(&client.r, (const void*)&(buffer[12]), sizeof(float));
+		memcpy(&client.shot, (const void*)&(buffer[16]), sizeof(float));
+
 
 		printf("From: %s:%d: {%.2f, %.2f}\n", inet_ntoa(client.addr.sin_addr), client.addr.sin_port, client.x, client.z);
 	}
@@ -193,7 +195,7 @@ namespace net
 		// Add 20 ms to the next broadcast time from now()
 		//m_NextBroadcastTime 
 
-		const int length = sizeof(PlayerPosition) * 4;
+		const int length = sizeof(PlayerPosition) * 4 + 4;
 		char data[length];
 
 

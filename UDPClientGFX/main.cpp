@@ -5,7 +5,7 @@
 #include <GL/freeglut.h>
 
 #include <gameplay/playermovementsystem.h>
-
+#include <RyansFinalProtocol.pb.h>
 using namespace gdp;
 
 Engine g_Engine;

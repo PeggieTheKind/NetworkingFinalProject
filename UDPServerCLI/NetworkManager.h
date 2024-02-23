@@ -24,6 +24,7 @@ namespace net
 		float z;
 		float l;
 		float r;
+		bool shot;
 	};
 
 	struct ClientInfo : public PlayerPosition

@@ -97,7 +97,8 @@ void Engine::Update()
 	controller->moveForward = m_Keys['w'];
 	controller->moveLeft = m_Keys['a'];
 	controller->moveRight = m_Keys['d'];
-	
+	controller->hasShot = m_Keys['q'];
+
 	std::vector<Entity*> entities;
 	GetEntityManager().GetEntities(entities);
 
@@ -108,7 +109,7 @@ void Engine::Update()
 
 	TransformComponent* transform = m_Player->GetComponent<TransformComponent>();
 
-	m_NetworkManager.SendPlayerPositionToServer(transform->position.x, transform->position.z, transform->orientation.x, transform->orientation.z);
+	m_NetworkManager.SendPlayerPositionToServer(transform->position.x, transform->position.z, transform->orientation.x, transform->orientation.z, controller->hasShot);
 	m_NetworkManager.Update();
 
 	for (int i = 0; i < 4; i++)
@@ -118,6 +119,7 @@ void Engine::Update()
 		transform->position.z = m_NetworkManager.m_NetworkedPositions[i].z;
 		transform->orientation.x = m_NetworkManager.m_NetworkedPositions[i].l;
 		transform->orientation.z = m_NetworkManager.m_NetworkedPositions[i].r;
+
 	}
 }
 
@@ -150,12 +152,16 @@ void Engine::Render()
 
 	std::vector<Entity*> entities;
 	GetEntityManager().GetEntities(entities);
-
+	
 	for (int i = 0; i < entities.size(); i++)
 	{
 		Entity* entity = entities[i];
 		if (entity->HasComponent<MeshRendererComponent>() && entity->HasComponent<TransformComponent>())
 		{
+			if (entity->isBullet && entity->inMotion)
+			{
+
+			}
 			MeshRendererComponent* renderer = entity->GetComponent<MeshRendererComponent>();
 			TransformComponent* transform = entity->GetComponent<TransformComponent>();
 
@@ -263,6 +269,14 @@ void Engine::LoadAssets()
 	m_Player->AddComponent<PlayerControllerComponent>();
 	m_Player->AddComponent<NetComponent>(true);
 
+	Entity* bullet1 = GetEntityManager().CreateEntity();
+	bullet1->AddComponent<MeshRendererComponent>(sphere.Vbo, sphere.NumTriangles, glm::vec3(0.3f, 0.3f, 0.3f));
+	bullet1->AddComponent<TransformComponent>(glm::vec3(-30, 50, 0), unscaled, identity); //behind camera
+	bullet1->parentOf = m_Player;
+	bullet1->isBullet;
+	bullet1->inMotion = false;
+	m_NetworkedEntities.push_back(bullet1);
+
 	// Create our player object
 	/*Entity* player1 = GetEntityManager().CreateEntity();
 	player1->AddComponent<MeshRendererComponent>(cube.Vbo, cube.NumTriangles, glm::vec3(0.f, 1.f, 0.f));
@@ -277,12 +291,28 @@ void Engine::LoadAssets()
 	player2->AddComponent<PlayerControllerComponent>();
 	player2->AddComponent<NetComponent>(true);
 
+	Entity* bullet2 = GetEntityManager().CreateEntity();
+	bullet2->AddComponent<MeshRendererComponent>(sphere.Vbo, sphere.NumTriangles, glm::vec3(0.3f, 0.3f, 0.3f));
+	bullet2->AddComponent<TransformComponent>(glm::vec3(-30, 50, 0), unscaled, identity); //behind camera
+	bullet2->parentOf = player2;
+	bullet2->isBullet;
+	bullet2->inMotion = false;
+	m_NetworkedEntities.push_back(bullet2);
+
 	// Create our player object
 	Entity* player3 = GetEntityManager().CreateEntity();
 	player3->AddComponent<MeshRendererComponent>(cube.Vbo, cube.NumTriangles, glm::vec3(0.f, 0.f, 1.f));
 	player3->AddComponent<TransformComponent>(glm::vec3(0.0, 0.0, 10.0), unscaled, identity);
 	player3->AddComponent<PlayerControllerComponent>();
 	player3->AddComponent<NetComponent>(true);
+
+	Entity* bullet3 = GetEntityManager().CreateEntity();
+	bullet3->AddComponent<MeshRendererComponent>(sphere.Vbo, sphere.NumTriangles, glm::vec3(0.3f, 0.3f, 0.3f));
+	bullet3->AddComponent<TransformComponent>(glm::vec3(-30, 50, 0), unscaled, identity); //behind camera
+	bullet3->parentOf = player3;
+	bullet3->isBullet;
+	bullet3->inMotion = false;
+	m_NetworkedEntities.push_back(bullet3);
 
 	// Create our player object
 	Entity* player4 = GetEntityManager().CreateEntity();
@@ -291,13 +321,14 @@ void Engine::LoadAssets()
 	player4->AddComponent<PlayerControllerComponent>();
 	player4->AddComponent<NetComponent>(true);
 
-	for (int i = 0; i < 4; i++)
-	{
-		Entity* entity = GetEntityManager().CreateEntity();
-		entity->AddComponent<MeshRendererComponent>(sphere.Vbo, sphere.NumTriangles, glm::vec3(0.3f, 0.3f, 0.3f));
-		entity->AddComponent<TransformComponent>(glm::vec3(-30, 50, 0), unscaled, identity); //behind camera
-		m_NetworkedEntities.push_back(entity);
-	}
+	Entity* bullet4 = GetEntityManager().CreateEntity();
+	bullet4->AddComponent<MeshRendererComponent>(sphere.Vbo, sphere.NumTriangles, glm::vec3(0.3f, 0.3f, 0.3f));
+	bullet4->AddComponent<TransformComponent>(glm::vec3(-30, 50, 0), unscaled, identity); //behind camera
+	bullet4->parentOf = player4;
+	bullet4->isBullet;
+	bullet4->inMotion = false;
+	m_NetworkedEntities.push_back(bullet4);
+
 
 	// Camera
 	m_CameraEntity = GetEntityManager().CreateEntity();
